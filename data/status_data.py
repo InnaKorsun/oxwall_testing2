@@ -20,7 +20,7 @@ def random_string(maxlength):
     return ''.join([random.choice(symbols) for _ in range(length)])
 
 
-status_data += [random_string(50) for _ in range(3)]
+status_data += [random_string(50) for _ in range(1)]
 
 
 if __name__ == "__main__":
