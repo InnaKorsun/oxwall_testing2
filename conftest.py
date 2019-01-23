@@ -64,7 +64,7 @@ def signed_in_user(driver, admin):
     app = OxwallSite(driver)
     app.login_as(admin)
     yield admin
-    app.logout_as(admin)
+    app.logout()
 
 
 @pytest.fixture()
