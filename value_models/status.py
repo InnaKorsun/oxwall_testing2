@@ -12,6 +12,14 @@ class Status:
     def __str__(self):
         return 'Status of {} user with text: {}'.format(self.user, self.text)
 
+    def __repr__(self):
+        return "{}: text={}, user={}, {}".format(
+            self.__class__,
+            self.text,
+            str(self.user),
+            "with photo" if self.photo_source else "without photo"
+        )
+
 
 if __name__ == "__main__":
     some_user = User(username="test", password="test_pass")

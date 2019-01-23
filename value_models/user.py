@@ -14,7 +14,14 @@ class User:
             "admin" if self.is_admin else "not admin"
         )
 
-    # TODO repr!!!
+    def __repr__(self):
+        return "{}: username={}, password={}, email={}{}".format(
+            self.__class__,
+            self.username,
+            self.password,
+            self.email,
+            "admin" if self.is_admin else "not admin"
+        )
 
 
 if __name__ == "__main__":
