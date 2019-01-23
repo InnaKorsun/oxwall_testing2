@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from page_objects.custom_expected_condition.expected_condition import amount_of_element_located
@@ -28,6 +29,23 @@ class DashboardPage(InternalPage):
     def status_list(self):
         return [StatusElement(el) for el in self.driver.find_elements(*self.STATUS_BOX)]
 
+    @allure.step("WHEN I add a status with {status} in Dashboard page")
+    def add_new_text_status(self, status):
+        self.status_text_field.input(status.text)
+        self.send_button.click()
+
+    @allure.step("THEN a new status block appears before old list of status")
     def wait_until_new_status_appeared(self):
         old_number = len(self.status_list)
         self.wait.until(amount_of_element_located(self.STATUS_BOX, old_number+1), "No new status detected")
+
+    @allure.step('THEN this status block has this {status} '
+                 'and correct status author and time "within 1 minute"')
+    def verify_new_text_status_block(self, status):
+        new_status = self.status_list[0]
+        assert status.text == new_status.text, \
+            f"Submitted status text '{status.text}' != displayed status text '{new_status.text}"
+        assert status.user.real_name == new_status.user, \
+            f"Submitted status user '{status.user.real_name}' != displayed status text '{new_status.text}'"
+        assert "within 1 minute" == new_status.time, \
+            "Displayed status time != 'within 1 minute'"
